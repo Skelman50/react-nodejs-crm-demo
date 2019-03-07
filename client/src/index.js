@@ -9,7 +9,10 @@ import thunk from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import rootReducer from './reducers/rootReducer'
 
+
+
 import '../node_modules/materialize-css/dist/js/materialize'
+
 
 const store = createStore(
     rootReducer,

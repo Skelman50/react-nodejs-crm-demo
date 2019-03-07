@@ -5,16 +5,16 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import AuphLayout from '../auth-layout/AuphLayout';
 import SiteLayout from '../site-layout/SiteLayout';
 import { getUser } from '../../actions/index';
-import * as dotenv from 'dotenv'
-dotenv.config()
+require('dotenv').config()
 
 class App extends Component {
+
   componentWillMount() {
     try {
       const bearer = localStorage.getItem('auth-token');
       if (bearer !== null) {
         const token = bearer.split(' ').splice(1, 1).join(' ');
-        const decoded = jwt.verify(token, process.env.SECRET_JWT);
+        const decoded = jwt.verify(token, process.env.REACT_APP_SECRET_JWT);
         const data = new Date();
         if (decoded.exp > data.getSeconds() / 1000) {
           this.props.userLogin(bearer);
@@ -28,6 +28,7 @@ class App extends Component {
       localStorage.clear();
     }
   }
+
 
   render() {
     return (

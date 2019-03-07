@@ -69,8 +69,6 @@ module.exports.analytics = async function (req, res) {
     const allOrders = await Order.find({ user: req.user.id }).sort({ date: 1 });
 
     const ordersMap = getOrdersMap(allOrders);
-    console.log(ordersMap);
-
 
     const avarage = +(calculatePrice(allOrders) / Object.keys(ordersMap).length).toFixed(2);
 

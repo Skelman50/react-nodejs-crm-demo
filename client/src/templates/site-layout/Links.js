@@ -1,7 +1,18 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect} from 'react-router-dom';
 
 class Links extends Component {
+  constructor() {
+    super();
+    this.logOut = this.logOut.bind(this);
+  }
+
+  logOut() {
+    localStorage.clear();
+    this.props.userLogin(null);
+    return <Redirect to="/login" />;
+  }
+
   render() {
     return (
       <ul className="sidenav sidenav-fixed a-sidenav">

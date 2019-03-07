@@ -18,24 +18,13 @@ import Links from '../../templates/site-layout/Links';
 
 
 class SiteLayout extends Component {
-  constructor() {
-    super();
-    this.logOut = this.logOut.bind(this);
-  }
-
-  logOut() {
-    localStorage.clear();
-    const get = localStorage.getItem('auth-token');
-    this.props.userLogin(get);
-    return <Redirect to="/login" />;
-  }
 
   render() {
     return (
 
       <Router>
         <div>
-          <Links {...this.props} />
+          <Links {...this.props}  />
 
           <main className="content">
             <Switch>
