@@ -14,6 +14,7 @@ class ModalList extends Component {
             <p>
 Общая стоимость
               <strong>
+              {' '}
                 {this.props.order.list ? this.props.computePrice(this.props.order) : null}
                 {' '}
 грн.
@@ -57,7 +58,7 @@ class Table extends Component {
                 <td>
                   {list.cost}
                   {' '}
-руб.
+грн.
                 </td>
               </tr>
             )) : null}
