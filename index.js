@@ -1,4 +1,4 @@
 const app = require('./app.js');
 
 
-app.listen(5000, () => console.log('Server RUN'));
+app.listen(process.env.PORT || 5000, () => console.log('Server RUN'));
