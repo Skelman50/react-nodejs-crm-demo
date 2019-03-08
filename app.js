@@ -38,9 +38,7 @@ app.use('/api/order', orderRouts);
 
 app.use('/api/position', positionRouts);
 
-if (process.env.NODE_ENV === 'production') {
   const clientPath = path.join(__dirname, 'client', 'build')
   app.use(express.static(clientPath))
-}
 
 module.exports = app;
