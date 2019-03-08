@@ -38,7 +38,13 @@ app.use('/api/order', orderRouts);
 
 app.use('/api/position', positionRouts);
 
-  const clientPath = path.join(__dirname, 'client', 'build')
-  app.use(express.static(clientPath))
+  app.use(express.static('client/build'))
+  app.get('*', (req, res) => {
+    res.sendFile(
+      path.resolve(
+        __dirname, 'client', 'build', 'index.html'
+      )
+    )
+  })
 
 module.exports = app;
