@@ -22,7 +22,7 @@ class App extends Component {
     try {
       const token = localStorage.getItem('auth-token');
       if (token !== null) {
-        const decoded = jwt.verify(token, 'dev-jwt');
+        const decoded = jwt.verify(token, process.env.REACT_APP_SECRET_JWT);
         this.getAccessToken(decoded);
       } else {
         this.noToken();
@@ -35,13 +35,13 @@ class App extends Component {
   refreshToken() {
     try {
       const token = this.props.user.split(' ').splice(1, 1).join(' ');
-      const decoded = jwt.verify(token, 'dev-jwt');
+      const decoded = jwt.verify(token, process.env.REACT_APP_SECRET_JWT);
       const data = new Date();
       const timeout = (decoded.exp - data.getTime() / 1000 - 10).toFixed(0);
       setTimeout(() => {
         if (this.props.user !== null) {
           const token = this.props.user.split(' ').splice(1, 1).join(' ');
-          const decoded = jwt.verify(token, 'dev-jwt');
+          const decoded = jwt.verify(token, process.env.REACT_APP_SECRET_JWT);
           if (decoded && token) {
             this.getAccessToken(decoded);
           }
