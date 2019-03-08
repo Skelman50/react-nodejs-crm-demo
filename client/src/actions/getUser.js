@@ -20,7 +20,7 @@ export function userLogin(user, materialize, redirect) {
         materialize.toast(res.error);
       } else {
         dispatch(getUser(res.token));
-        localStorage.setItem('auth-token', res.token);
+        localStorage.setItem('auth-token', res.refreshToken);
         return redirect.push('/overview');
       }
     });

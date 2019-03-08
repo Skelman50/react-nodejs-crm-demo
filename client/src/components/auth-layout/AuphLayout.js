@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 import LoginPage from '../login-page/LoginPage';
 import RegistrationPage from '../registration-page/RegistrationPage';
-import { isActive } from '../../actions';
+import { isActive, validationCheck } from '../../actions';
 import AuphLayoutTemplate from '../../templates/auth-layout/AuphLayoutTemplate';
 
 class AuphLayout extends Component {
@@ -18,6 +18,7 @@ class AuphLayout extends Component {
   }
 
   componentDidMount() {
+    this.props.checkValidation({ ...this.props.validation, isBtnDisabled: true });
     if (this.props.location.pathname === '/register') {
       return this.props.isActive({
         registerClassname: 'active',
@@ -60,9 +61,11 @@ class AuphLayout extends Component {
 const mapStateToProps = state => ({
   loginClassName: state.activeLinks.loginClassName,
   registerClassname: state.activeLinks.registerClassname,
+  validation: state.validation,
 });
 const mapDispatchToProps = dispath => ({
   isActive: links => dispath(isActive(links)),
+  checkValidation: data => dispath(validationCheck(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuphLayout);

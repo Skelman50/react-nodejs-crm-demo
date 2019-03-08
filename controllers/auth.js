@@ -1,7 +1,8 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
 const User = require('../models/User.js');
-const dotenv = require('dotenv')
+
 dotenv.config();
 
 module.exports.login = async function (req, res) {
@@ -10,18 +11,24 @@ module.exports.login = async function (req, res) {
   if (candidate) {
     const passwordRes = bcrypt.compareSync(req.body.password, candidate.password);
     if (passwordRes) {
-
       const token = jwt.sign({
         email: candidate.email,
         userId: candidate._id,
       }, process.env.SECRET_JWT, { expiresIn: 60 * 60 });
-      
+
+      const refreshToken = jwt.sign({
+        email: candidate.email,
+        userId: candidate._id,
+      }, process.env.SECRET_JWT, { expiresIn: 60 * 60 * 24 * 10 });
+
+
       res.status(200).json({
         token: `Bearer ${token}`,
+        refreshToken,
       });
     } else {
       res.status(401).json({
-        error: 'password incorrect',
+        error: 'Password incorrect',
       });
     }
   } else {
@@ -31,11 +38,36 @@ module.exports.login = async function (req, res) {
   }
 };
 
+module.exports.refresh = async function (req, res) {
+  const candidate = await User.findOne({ _id: req.body.userId });
+
+  if (candidate) {
+    const token = jwt.sign({
+      email: candidate.email,
+      userId: candidate._id,
+    }, process.env.SECRET_JWT, { expiresIn: 60 * 60 });
+
+    const refreshToken = jwt.sign({
+      email: candidate.email,
+      userId: candidate._id,
+    }, process.env.SECRET_JWT, { expiresIn: 60 * 60 * 24 * 10 });
+
+    res.status(200).json({
+      token: `Bearer ${token}`,
+      refreshToken,
+    });
+  } else {
+    res.status(404).json({
+      error: error.message,
+    });
+  }
+};
+
 module.exports.register = async function (req, res) {
   const candidate = await User.findOne({ email: req.body.email });
   if (candidate) {
     res.status(409).json({
-      error: 'пользователь занят',
+      error: 'Пользователь занят',
     });
   } else {
     const salt = bcrypt.genSaltSync(10);
