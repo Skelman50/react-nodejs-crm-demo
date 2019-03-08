@@ -28,6 +28,7 @@ class SiteLayout extends Component {
 
           <main className="content">
             <Switch>
+              <Redirect exact from="/login" to="/overview" component={OverviewPage} />
               <Route exact path="/overview" component={OverviewPage} />
               <Route exact path="/history" component={HistoryPage} />
               <Route exact path="/analytics" component={AnalyticPage} />
@@ -41,8 +42,6 @@ class SiteLayout extends Component {
               <Route exact path="/categories" component={CategoriesPage} />
               <Route exact path="/categories/new/" component={CategoriesForms} />
               <Route exact path="/categories/:id/" component={CategoriesForms} />
-              <Redirect exact from="/login" to="/overview" key="for-over" />
-              <Redirect exact from="/register" to="/overview" key="for-over" />
             </Switch>
           </main>
           <ModalLinks />

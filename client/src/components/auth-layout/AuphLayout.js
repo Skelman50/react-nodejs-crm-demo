@@ -50,7 +50,6 @@ class AuphLayout extends Component {
             <Redirect exact from="/" to="/login" />
             <Route path="/login" exact component={LoginPage} />
             <Route path="/register" exact component={RegistrationPage} />
-            <Redirect from="*" to="/login" />
           </Switch>
         </div>
       </Router>
