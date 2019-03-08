@@ -10,7 +10,8 @@ const categoryhRouts = require('./routs/category');
 const orderRouts = require('./routs/order');
 const positionRouts = require('./routs/position');
 const mongoKey = require('./config/mongoConfig');
-const errorHandler = require('./utils/errorHandler');
+const path = require('path')
+require('dotenv').config()
 
 const app = express();
 
@@ -36,5 +37,17 @@ app.use('/api/category', categoryhRouts);
 app.use('/api/order', orderRouts);
 
 app.use('/api/position', positionRouts);
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'))
+  app.get('*', (res, req) => {
+    res.sendFile(
+      path.resolve(
+        __dirname, 'client', 'build', 'index.html'
+      )
+    )
+  })
+}
+
 
 module.exports = app;
