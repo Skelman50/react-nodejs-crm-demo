@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Redirect} from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 class Links extends Component {
   constructor() {

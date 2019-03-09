@@ -5,7 +5,7 @@ class MoreLoad extends Component {
     return (
       <div
         style={{
-          display: this.props.validation.isDisabled ? 'none' : 'block',
+          display: this.props.validation.isDisabled || this.props.orderList.length === 0 ? 'none' : 'block',
         }}
         className="center mb2"
       >
