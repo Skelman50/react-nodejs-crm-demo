@@ -10,7 +10,7 @@ class ImageView extends Component {
             <img
               className="responsive-img"
               style={{ height: '200px' }}
-              src={this.props.image.imagePreview ? this.props.image.imagePreview : `http://localhost:3000/${this.props.image.loadImage}`}
+              src={this.props.image.imagePreview ? this.props.image.imagePreview : this.props.image.loadImage}
               alt={this.props.image.imagePreview}
             />
           ) : null}
