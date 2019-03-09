@@ -38,7 +38,8 @@ app.use('/api/order', orderRouts);
 
 app.use('/api/position', positionRouts);
 
-app.use(express.static('client/build'))
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'))
   app.get('*', (req, res) => {
     res.sendFile(
       path.resolve(
@@ -46,5 +47,6 @@ app.use(express.static('client/build'))
       )
     )
   })
+}
 
 module.exports = app;
