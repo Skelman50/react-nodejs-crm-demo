@@ -13,7 +13,7 @@ dotenv.config();
 class App extends Component {
   constructor() {
     super()
-    this.env = process.env.REACT_APP_SECRET_JWT ? process.env.REACT_APP_SECRET_JWT : runtimeEnv().REACT_APP_SECRET_JWT
+    this.env = runtimeEnv().REACT_APP_SECRET_JWT
   }
   componentWillMount() {
     this.checkToken(); 
