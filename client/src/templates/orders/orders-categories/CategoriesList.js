@@ -25,7 +25,7 @@ class CategoriesList extends Component {
                 >
                   <div className="center">
                     <img
-                      src={`http://localhost:3000/${category.imageSrc}`}
+                      src={`/${category.imageSrc}`}
                       alt={category.name}
                       className="responsive-img order-img"
                     />
