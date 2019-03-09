@@ -9,7 +9,6 @@ class PositionsList extends Component {
     this.onAdd = this.onAdd.bind(this);
   }
 
-
   onAdd(position, ref) {
     if (ref.current.value < 1) {
       this.materialize.toast('Количество не может быть меньше 1');

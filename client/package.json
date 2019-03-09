@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@mars/heroku-js-runtime-env": "^3.0.2",
     "axios": "^0.18.0",
     "bcryptjs": "^2.4.3",
     "chart.js": "^2.7.3",

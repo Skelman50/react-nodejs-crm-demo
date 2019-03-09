@@ -24,7 +24,7 @@ class OrderPositions extends Component {
 
 
   fetchPositions() {
-    this.props.ordersFetch(this.props.user, this.props.orderId)
+    this.props.ordersFetch(this.props.user, this.props.match.params.id)
       .then(() => this.props.isLoading(false));
   }
 

@@ -6,12 +6,17 @@ import * as dotenv from 'dotenv';
 import AuphLayout from '../auth-layout/AuphLayout';
 import SiteLayout from '../site-layout/SiteLayout';
 import { getUser } from '../../actions/index';
+import runtimeEnv from '@mars/heroku-js-runtime-env';
 
 dotenv.config();
 
 class App extends Component {
+  constructor() {
+    super()
+    this.env = process.env.REACT_APP_SECRET_JWT ? process.env.REACT_APP_SECRET_JWT : runtimeEnv().REACT_APP_SECRET_JWT
+  }
   componentWillMount() {
-    this.checkToken();
+    this.checkToken(); 
   }
 
   componentDidUpdate() {
@@ -19,10 +24,11 @@ class App extends Component {
   }
 
   checkToken() {
+    
     try {
       const token = localStorage.getItem('auth-token');
       if (token !== null) {
-        const decoded = jwt.verify(token, process.env.REACT_APP_SECRET_JWT);
+        const decoded = jwt.verify(token, this.env);
         this.getAccessToken(decoded);
       } else {
         this.noToken();
@@ -35,13 +41,13 @@ class App extends Component {
   refreshToken() {
     try {
       const token = this.props.user.split(' ').splice(1, 1).join(' ');
-      const decoded = jwt.verify(token, process.env.REACT_APP_SECRET_JWT);
+      const decoded = jwt.verify(token, this.env);
       const data = new Date();
       const timeout = (decoded.exp - data.getTime() / 1000 - 10).toFixed(0);
       setTimeout(() => {
         if (this.props.user !== null) {
           const token = this.props.user.split(' ').splice(1, 1).join(' ');
-          const decoded = jwt.verify(token, process.env.REACT_APP_SECRET_JWT);
+          const decoded = jwt.verify(token, this.env);
           if (decoded && token) {
             this.getAccessToken(decoded);
           }
