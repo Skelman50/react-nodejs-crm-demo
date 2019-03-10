@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class EmailField extends Component {
+class EmailFieldLogin extends Component {
   render() {
     return (
       <div className="input-field">
@@ -16,9 +16,11 @@ class EmailField extends Component {
           ? (
             <span className="helper-text red-text">
               {
+      this.props.emailValue.current !== null &&  this.props.emailValue.current ?
         this.props.emailValue.current.value.length === 0 ? 'Email не может быть пустым'
           : !this.props.checkEmail ? 'Введите корректный Email'
             : null
+          :null
       }
             </span>
           )
@@ -29,4 +31,4 @@ class EmailField extends Component {
   }
 }
 
-export default EmailField;
+export default EmailFieldLogin;

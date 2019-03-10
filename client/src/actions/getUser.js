@@ -37,7 +37,8 @@ export function userRegister(user, materialize, redirect) {
   })
     .then(res => res.json())
     .then((res) => {
-      if (res.error && res.status !== 200) {
+      if (res.error) {
+        console.log(res);
         materialize.toast(res.error);
       } else {
         materialize.toast('Теперь можете войти в систему');

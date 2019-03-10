@@ -3,15 +3,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { validationCheck, userRegister, isActive } from '../../actions/index';
 import MaterialService from '../../services/MeteriaService';
-import EmailField from '../../templates/auth-page/EmailField';
-import PasswordField from '../../templates/auth-page/PasswordField';
 import CardAction from '../../templates/auth-page/CardAction';
+import EmailFieldRegister from '../../templates/auth-page/EmaiFieldRegister';
+import PasswordFieldRegister from '../../templates/auth-page/PasswordFielfRegister';
 
 class RegistrationPage extends Component {
   constructor() {
     super();
 
-    this.emailValue = React.createRef();
+    this.emailValueRegister = React.createRef();
     this.passwordValue = React.createRef();
     this.redExpEmail = /^[-._a-z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}$/;
     this.countFocusEmail = 0;
@@ -24,9 +24,27 @@ class RegistrationPage extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  componentWillUnmount() {
+    this.resetProps()
+  }
+
+  componentWillMount() {
+   this.resetProps()
+  }
+
+  resetProps() {
+    this.props.checkValidation({
+      isBtnDisabled: true,
+      isEmailErrorVisible: false,
+      isPasswordErrorVisible: false,
+      moreLoad: true,
+      isFilterValid: true,
+      isBtnVisible: true,
+    })
+  }
 
   onChange() {
-    this.checkEmail = this.redExpEmail.test(this.emailValue.current.value);
+    this.checkEmail = this.redExpEmail.test(this.emailValueRegister.current.value);
 
     if (this.passwordValue.current.value.length >= 6 && this.checkEmail) {
       return this.props.checkValidation({
@@ -77,7 +95,7 @@ class RegistrationPage extends Component {
       isBtnDisabled: true,
     });
     const user = {
-      email: this.emailValue.current.value,
+      email: this.emailValueRegister.current.value,
       password: this.passwordValue.current.value,
     };
     userRegister(user, this.materialize, this.props.history)
@@ -85,10 +103,6 @@ class RegistrationPage extends Component {
         this.props.checkValidation({
           ...this.props.validation,
           isBtnDisabled: false,
-        });
-        this.props.isActive({
-          loginClassName: 'active',
-          registerClassname: null,
         });
       });
   }
@@ -103,16 +117,16 @@ class RegistrationPage extends Component {
         >
           <div className="card-content">
             <span className="card-title">Cоздать аккаунт</span>
-            <EmailField
+            <EmailFieldRegister
               {...this.props}
               checkEmail={this.checkEmail}
               onFocusEmail={this.onFocusEmail}
-              emailValue={this.emailValue}
+              emailValueRegister={this.emailValueRegister}
               onChange={this.onChange}
               countFocusEmail={this.countFocusEmail}
             />
 
-            <PasswordField
+            <PasswordFieldRegister
               {...this.props}
               onFocusPassword={this.onFocusPassword}
               passwordValue={this.passwordValue}

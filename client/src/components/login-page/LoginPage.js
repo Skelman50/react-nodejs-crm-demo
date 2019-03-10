@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { validationCheck } from '../../actions/index';
+import { validationCheck, isActive } from '../../actions/index';
 import { userLogin } from '../../actions/index';
 import MaterialService from '../../services/MeteriaService';
-import EmailField from '../../templates/auth-page/EmailField';
-import PasswordField from '../../templates/auth-page/PasswordField';
+
 import CardAction from '../../templates/auth-page/CardAction';
+import PasswordFieldLogin from '../../templates/auth-page/PasswordFieldLogin';
+import EmailFieldLogin from '../../templates/auth-page/EmailFieldLogin';
+
 
 
 class LoginPage extends Component {
@@ -28,10 +30,14 @@ class LoginPage extends Component {
   }
 
   componentDidMount() {
-    if (this.props.location.pathname === '/login?registered=true') {
-      this.materialize('Теперь можете ввойти в систему');
-    }
+      if (this.props.location.pathname === '/login') {
+        this.props.isActive({
+          loginClassName: 'active',
+          registerClassname: null,
+        });
+      }
   }
+
 
   onChange() {
     this.checkEmail = this.redExpEmail.test(this.emailValue.current.value);
@@ -106,7 +112,7 @@ class LoginPage extends Component {
         >
           <div className="card-content">
             <span className="card-title">Войти в систему</span>
-            <EmailField
+            <EmailFieldLogin
               {...this.props}
               checkEmail={this.checkEmail}
               onFocusEmail={this.onFocusEmail}
@@ -115,7 +121,7 @@ class LoginPage extends Component {
               countFocusEmail={this.countFocusEmail}
             />
 
-            <PasswordField
+            <PasswordFieldLogin
               {...this.props}
               onFocusPassword={this.onFocusPassword}
               passwordValue={this.passwordValue}
@@ -139,6 +145,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispath => ({
   checkValidation: data => dispath(validationCheck(data)),
   userLogin: (user, materialize, redirect) => dispath(userLogin(user, materialize, redirect)),
+  isActive: links => dispath(isActive(links))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
